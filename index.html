@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Assets/css/styles.css" />
+    <title>Document</title>
+</head>
+<body >
+    <header>
+        <h1> Weather Dashboard</h1>
+    </header>
+
+    <div class="row">
+        <section class = "column1 locations ">
+            <h1 id="searchHeader">Search for a City:</h1>
+            <input id="input" type="text" value="San Diego">
+            <button id="search"> Search </button>
+            <hr>
+            <button> Atlanta </button>
+            <button> Denver </button>
+            <button> Seattle </button>
+            <button> San Francisco </button>
+            <button> Orlando </button>
+            <button> New York </button>
+            <button> Chicago </button>
+            <button> Austin </button>
+        </section>
+    
+        <section class = "column2">
+            <div id="currentWeather">
+                <h1 id="locationDate"> Atlanta (12/15/2022) </h1>
+                <h3 id="todaysTemp"> Temp: </h3>
+                <h3 id="todaysWind"> Wind: </h3>
+                <h3 id="todaysHumidity"> Humidity: </h3>
+            </div>
+            
+            <h2> 5 Day Forecast: </h2>
+            <div id = "weatherCards">
+                <div class = "card" id="day1">
+                    <h3 class="weatherDate"> Atlanta 12/15/2022 </h3>
+                    <h3 class = "emoji"> ☀️ </h3>
+                    <h3 class = "temp"> Temp: </h3>
+                    <h3 class = "wind"> Wind: </h3>
+                    <h3 class = "humidity"> Humidity: </h3>
+                </div>
+                <div class = "card" id="day2">
+                    <h3 class="weatherDate"> Atlanta 12/15/2022 </h3>
+                    <h3 class = "emoji"> ☀️ </h3>
+                    <h3 class = "temp"> Temp: </h3>
+                    <h3 class = "wind"> Wind: </h3>
+                    <h3 class = "humidity"> Humidity: </h3>
+                </div>
+                <div class = "card" id="day3">
+                    <h3 class="weatherDate"> Atlanta 12/15/2022 </h3>
+                    <h3 class = "emoji"> ☀️ </h3>
+                    <h3 class = "temp"> Temp: </h3>
+                    <h3 class = "wind"> Wind: </h3>
+                    <h3 class = "humidity"> Humidity: </h3>
+                </div>
+                <div class = "card" id="day4">
+                    <h3 class="weatherDate"> Atlanta 12/15/2022 </h3>
+                    <h3 class = "emoji"> ☀️ </h3>
+                    <h3 class = "temp"> Temp: </h3>
+                    <h3 class = "wind"> Wind: </h3>
+                    <h3 class = "humidity"> Humidity: </h3>
+                </div>
+                <div class = "card" id="day5">
+                    <h3 class="weatherDate"> Atlanta 12/15/2022 </h3>
+                    <h3 class = "emoji"> ☀️ </h3>
+                    <h3 class = "temp"> Temp: </h3>
+                    <h3 class = "wind"> Wind: </h3>
+                    <h3 class = "humidity"> Humidity: </h3>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./Assets/javascript/scripts.js"></script>
+</body>
+</html>

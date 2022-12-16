@@ -1,0 +1,99 @@
+:root {
+  --main-color: #48286f;
+}
+
+/* sets font for the whole page */
+* {
+  font-family: Arial, sans-serif;
+}
+
+/* removes margin from body */
+body {
+  margin: 0;
+}
+
+/* sets up headers background and text color, padding and spacing */
+header {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--main-color);
+  color: white;
+  font-weight: bold; 
+  margin-bottom: 10px;
+}
+
+
+.locations button {
+  margin: 8px;
+  padding: 8px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 10px;
+}
+
+.column2 {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.locations{
+  justify-content: center;
+}
+
+#searchHeader{
+  margin: 8px;
+}
+#search {
+  background-color:var(--main-color);
+  color: white;
+}
+
+#input {
+  margin: 8px;
+  padding: 8px;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:black;
+  height: 1px;
+}
+
+ button {
+  border: 0px;
+  border-radius: 5px;
+ }
+
+ #currentWeather{
+  border:1px solid black;
+  padding-left: 10px;
+  margin-right: 10px;
+ }
+
+ .card {
+  display: inline;
+  float: left;
+  width: 18%;
+  background-color: var(--main-color);
+  color: white;
+  margin: 2px;
+  padding-left: 10px;
+ }
+
+ .weatherDate {
+  overflow-wrap: normal;
+ }
