@@ -22,6 +22,10 @@ header {
   margin-bottom: 10px;
 }
 
+header h1{
+  margin: 4px;
+}
+
 
 .locations button {
   margin: 8px;
@@ -147,10 +151,19 @@ h3 {
   margin: 4px;
 }
 
-#locationDate {
+#location, #date {
   margin: 10px; 
 }
 
 .temp, .wind, .humidity {
   margin: 4px;
+}
+
+.history button:nth-child(even){
+  background-color: var(--main-color);
+  opacity: 75%;
+}
+
+input {
+  text-align: center;
 }

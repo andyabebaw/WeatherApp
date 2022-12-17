@@ -39,9 +39,25 @@ function getDate(daysinFuture) {
   return date;
 }
 
+function getTodaysDateLongForm(){
+  var today = new Date();
+  var day = today.toLocaleDateString('en-US', {
+    weekday: 'long',
+  });
+  var mm = today.toLocaleDateString('en-US', {
+    month: 'long',
+  });
+  var dd = today.getDate();
+
+  today = day + ', ' + mm + ' ' + dd;
+  return today;
+}
+
 function setTodaysDateTemp() {
-  var dateEl = $("#locationDate");
-  dateEl.text(currentLocation.toUpperCase() + " " + getDate(0));
+  var locationEl = $("#location");
+  var dateEl = $("#date");
+  locationEl.text(currentLocation.toUpperCase());
+  dateEl.text(getTodaysDateLongForm());
 }
 
 function setWeatherForecast(long, lat) {
@@ -168,8 +184,6 @@ function updateSearchButtons() {
 
 }
 
-var curr;
-
 function addSearchButtons() {
   if (recentSearches != null && recentSearches.length > 0) {
     console.log("here2")
@@ -179,7 +193,6 @@ function addSearchButtons() {
             text: recentSearches[i],
             class: "button",
           });
-          curr = button[0].innerHTML
           button.click(function () {
             currentLocation = button.text();
             init()
@@ -192,14 +205,22 @@ function addSearchButtons() {
 }
 
 $("#search").click(function () {
-  currentLocation = document.getElementById('input').value
+  currentLocation = document.getElementById('input').value;
   getCoordFromCityName(currentLocation, false);
+});
+
+$("#input").on('keyup', function (e) {
+  if (e.key === 'Enter' || e.keyCode === 13) {
+    currentLocation = document.getElementById('input').value;
+    getCoordFromCityName(currentLocation, false);
+  }
 });
 
 $("#clear").click(function () {
   for(var i = 0; i < recentSearches.length; i++){
     $(".history .button")[0].remove();
   }
-  recentSearches = []
+  recentSearches = [];
   localStorage.removeItem("recent");
 });
+
