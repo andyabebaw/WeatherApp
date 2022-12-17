@@ -206,3 +206,7 @@ input {
   color: var(--main-color);
   border: 2px solid var(--main-color);
 }
+
+.weekday {
+  margin: 10px;
+}

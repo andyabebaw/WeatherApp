@@ -40,6 +40,16 @@ function getDate(daysinFuture) {
   return date;
 }
 
+function getDayOfWeek(daysinFuture){
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var today = new Date();
+  var newDay = tomorrow = new Date(today)
+
+  newDay.setDate(tomorrow.getDate() + daysinFuture)
+  console.log(newDay.getDay())
+  return weekday[newDay.getDay()];
+}
+
 function getTodaysDateLongForm() {
   var today = new Date();
   var day = today.toLocaleDateString('en-US', {
@@ -77,6 +87,10 @@ function setForecastData() {
 
   $(".card").children(".weatherDate")
   for (var i = 0; i < cards.length; i++) {
+
+    var weekday = cards.children(".weekday");
+    weekday[i].innerHTML = (getDayOfWeek(i+1));
+
     var weatherDate = cards.children(".weatherDate");
     weatherDate[i].innerHTML = (getDate(i + 1));
 
