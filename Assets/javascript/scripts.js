@@ -144,7 +144,7 @@ function submitCity() {
     recentSearches = recentSearches || [];
     if (recentSearches.length === 10) {
       recentSearches.shift()
-      $(".history .button")[0].remove();
+      $(".history .button")[recentSearches.length].remove();
     }
 
     recentSearches.push(currentLocation.toUpperCase());
@@ -164,7 +164,7 @@ function updateSearchButtons() {
       currentLocation = button.text();
       init()
     });
-  $(".history").append(button)
+  $(".history").prepend(button)
 
 }
 
