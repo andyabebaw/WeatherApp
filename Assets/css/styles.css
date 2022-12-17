@@ -106,6 +106,7 @@ hr {
   margin-right: 10px;
   text-align: center;
   border-radius: 10px;
+  padding-bottom: 10px;
  }
 
  .card {
@@ -182,4 +183,26 @@ input {
   text-align: center;
   margin: 0px;
   display: none;
+}
+
+#search:hover{
+  background-color:white;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+}
+#clear:hover{
+  background-color: var(--main-color);
+  color: white;
+}
+.button:hover {
+  background-color:white;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+}
+
+.button:nth-child(even):hover{
+  opacity: 100%;
+  background-color:white;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
 }
