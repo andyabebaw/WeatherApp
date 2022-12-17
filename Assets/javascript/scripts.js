@@ -4,18 +4,24 @@ var lat;
 var long;
 
 var currentLocation = "Atlanta";
-
-
-
+var recentSearches = JSON.parse(localStorage.getItem("recent"))
 
 var cards = $(".card").map(function () {
   return this;
 });
 
 $(function () {
-  setTodaysDateTemp()
-  getCoordFromCityName(currentLocation);
+  addSearchButtons()
+  init();
 });
+
+function init() {
+  if(recentSearches === null){
+    recentSearches = [];
+  }
+  setTodaysDateTemp()
+  getCoordFromCityName(currentLocation, true);
+}
 
 function getDate(daysinFuture) {
 
@@ -47,7 +53,6 @@ function setWeatherForecast(long, lat) {
     .then(function (data) {
       forecastData = data;
       setForecastData(long, lat);
-      console.log(data);
     })
 }
 
@@ -63,9 +68,8 @@ function setForecastData(long, lat) {
 
     var icon = cards.children(".emoji");
     var iconURL = "http://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
-    console.log(icon[i]);
     icon[i].src = iconURL;
-    console.log(iconURL)
+
     var temp = cards.children(".temp");
     temp[i].innerHTML = "Temp: " + day.temp.day + " °F";
 
@@ -104,28 +108,92 @@ function getWeather(long, lat) {
       setTodaysTemp();
       setTodaysWindSpeed();
       setTodaysHumidity();
-      console.log(data);
     })
 }
 
-function getCoordFromCityName(cityName) {
+function getCoordFromCityName(cityName, isInit) {
   var weatherURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=ee5bac9a1e0c0e170057e26226f0931a"
   fetch(weatherURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      lat = data[0].lat
-      long = data[0].lon
-      setTodaysDateTemp();
-      setWeatherForecast(long, lat);
-      getWeather(long, lat);
-      console.log(data);
+      if(data.length != 0){
+        lat = data[0].lat
+        long = data[0].lon
+        setTodaysDateTemp();
+        setWeatherForecast(long, lat);
+        getWeather(long, lat);
+        if(!isInit){
+          submitCity();
+        }
+      }
     })
 }
 
-$( "#search" ).click(function() {
+$("#search").click(function () {
   currentLocation = document.getElementById('input').value
-  getCoordFromCityName(currentLocation);
+  getCoordFromCityName(currentLocation, false);
+  
 });
 
+$("#clear").click(function () {
+  for(var i = 0; i < recentSearches.length; i++){
+    $(".locations .button")[0].remove();
+  }
+  recentSearches = []
+  localStorage.removeItem("recent");
+});
+
+
+function submitCity() {
+  if (!recentSearches.includes(currentLocation.toUpperCase())) {
+    recentSearches = recentSearches || [];
+    if (recentSearches.length === 10) {
+      recentSearches.shift()
+      $(".locations .button")[0].remove();
+    }
+
+    recentSearches.push(currentLocation.toUpperCase());
+    localStorage.setItem("recent", JSON.stringify(recentSearches))
+    updateSearchButtons();
+  }
+}
+
+function updateSearchButtons() {
+  console.log("here1")
+  var button = $('<button/>',
+    {
+      text: recentSearches[recentSearches.length - 1],
+      class: "button",
+    });
+    button.click(function () {
+      currentLocation = button.text();
+      init()
+    });
+  $(".locations").append(button)
+
+}
+
+var curr;
+
+function addSearchButtons() {
+  if (recentSearches != null && recentSearches.length > 0) {
+    console.log("here2")
+    for ( var i = 0; i < recentSearches.length; i++ ) (function(i){ 
+      var button = $('<button/>',
+          {
+            text: recentSearches[i],
+            class: "button",
+          });
+          curr = button[0].innerHTML
+          button.click(function () {
+            currentLocation = button.text();
+            init()
+          });
+        
+        $(".locations").append(button)
+    })(i);
+
+  }
+}
