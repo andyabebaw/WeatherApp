@@ -87,6 +87,13 @@ function setTodaysTemp() {
   temp.text(currentWeather.main.temp);
 }
 
+function setTodaysIcon(){
+  var icon = $("#todaysEmoji");
+  console.log(currentWeather);
+  var iconURL = "http://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png";
+  icon.attr("src", iconURL);
+}
+
 function setTodaysWindSpeed() {
   var wind = $("#todaysWind");
   wind.text((currentWeather.wind.speed));
@@ -106,6 +113,7 @@ function getWeather(long, lat) {
     .then(function (data) {
       currentWeather = data;
       setTodaysTemp();
+      setTodaysIcon();
       setTodaysWindSpeed();
       setTodaysHumidity();
     })
@@ -131,27 +139,12 @@ function getCoordFromCityName(cityName, isInit) {
     })
 }
 
-$("#search").click(function () {
-  currentLocation = document.getElementById('input').value
-  getCoordFromCityName(currentLocation, false);
-  
-});
-
-$("#clear").click(function () {
-  for(var i = 0; i < recentSearches.length; i++){
-    $(".locations .button")[0].remove();
-  }
-  recentSearches = []
-  localStorage.removeItem("recent");
-});
-
-
 function submitCity() {
   if (!recentSearches.includes(currentLocation.toUpperCase())) {
     recentSearches = recentSearches || [];
     if (recentSearches.length === 10) {
       recentSearches.shift()
-      $(".locations .button")[0].remove();
+      $(".history .button")[0].remove();
     }
 
     recentSearches.push(currentLocation.toUpperCase());
@@ -171,7 +164,7 @@ function updateSearchButtons() {
       currentLocation = button.text();
       init()
     });
-  $(".locations").append(button)
+  $(".history").append(button)
 
 }
 
@@ -192,8 +185,21 @@ function addSearchButtons() {
             init()
           });
         
-        $(".locations").append(button)
+        $(".history").prepend(button)
     })(i);
 
   }
 }
+
+$("#search").click(function () {
+  currentLocation = document.getElementById('input').value
+  getCoordFromCityName(currentLocation, false);
+});
+
+$("#clear").click(function () {
+  for(var i = 0; i < recentSearches.length; i++){
+    $(".history .button")[0].remove();
+  }
+  recentSearches = []
+  localStorage.removeItem("recent");
+});
