@@ -145,7 +145,11 @@ hr {
   max-width: 200%;  
   height: auto;
   margin:0px;
+  background-color: white;
+  clip-path: circle();
 }
+
+
 
 h3 {
   margin: 4px;
@@ -164,6 +168,18 @@ h3 {
   opacity: 75%;
 }
 
+.card:nth-child(even){
+  background-color: var(--main-color);
+  opacity: 75%;
+}
+
 input {
   text-align: center;
+}
+
+#error {
+  color: red;
+  text-align: center;
+  margin: 0px;
+  display: none;
 }

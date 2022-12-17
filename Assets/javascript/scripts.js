@@ -5,6 +5,7 @@ var long;
 
 var currentLocation = "Atlanta";
 var recentSearches = JSON.parse(localStorage.getItem("recent"))
+var error = $("#error")
 
 var cards = $(".card").map(function () {
   return this;
@@ -16,7 +17,7 @@ $(function () {
 });
 
 function init() {
-  if(recentSearches === null){
+  if (recentSearches === null) {
     recentSearches = [];
   }
   setTodaysDateTemp()
@@ -39,7 +40,7 @@ function getDate(daysinFuture) {
   return date;
 }
 
-function getTodaysDateLongForm(){
+function getTodaysDateLongForm() {
   var today = new Date();
   var day = today.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -60,7 +61,7 @@ function setTodaysDateTemp() {
   dateEl.text(getTodaysDateLongForm());
 }
 
-function setWeatherForecast(long, lat) {
+function setWeatherForecast() {
   var weatherURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + long + "&appid=ee5bac9a1e0c0e170057e26226f0931a&units=imperial";
   fetch(weatherURL)
     .then(function (response) {
@@ -68,12 +69,11 @@ function setWeatherForecast(long, lat) {
     })
     .then(function (data) {
       forecastData = data;
-      setForecastData(long, lat);
+      setForecastData();
     })
 }
 
-function setForecastData(long, lat) {
-
+function setForecastData() {
 
   $(".card").children(".weatherDate")
   for (var i = 0; i < cards.length; i++) {
@@ -103,9 +103,8 @@ function setTodaysTemp() {
   temp.text(currentWeather.main.temp);
 }
 
-function setTodaysIcon(){
+function setTodaysIcon() {
   var icon = $("#todaysEmoji");
-  console.log(currentWeather);
   var iconURL = "http://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png";
   icon.attr("src", iconURL);
 }
@@ -120,7 +119,7 @@ function setTodaysHumidity() {
   humidity.text((currentWeather.main.humidity));
 }
 
-function getWeather(long, lat) {
+function getWeather() {
   var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=ee5bac9a1e0c0e170057e26226f0931a&units=imperial";
   fetch(weatherURL)
     .then(function (response) {
@@ -142,15 +141,17 @@ function getCoordFromCityName(cityName, isInit) {
       return response.json();
     })
     .then(function (data) {
-      if(data.length != 0){
+      if (data.length != 0) {
         lat = data[0].lat
         long = data[0].lon
         setTodaysDateTemp();
         setWeatherForecast(long, lat);
         getWeather(long, lat);
-        if(!isInit){
+        if (!isInit) {
           submitCity();
         }
+      } else {
+        error.show();
       }
     })
 }
@@ -176,10 +177,10 @@ function updateSearchButtons() {
       text: recentSearches[recentSearches.length - 1],
       class: "button",
     });
-    button.click(function () {
-      currentLocation = button.text();
-      init()
-    });
+  button.click(function () {
+    currentLocation = button.text();
+    init()
+  });
   $(".history").prepend(button)
 
 }
@@ -187,18 +188,18 @@ function updateSearchButtons() {
 function addSearchButtons() {
   if (recentSearches != null && recentSearches.length > 0) {
     console.log("here2")
-    for ( var i = 0; i < recentSearches.length; i++ ) (function(i){ 
+    for (var i = 0; i < recentSearches.length; i++) (function (i) {
       var button = $('<button/>',
-          {
-            text: recentSearches[i],
-            class: "button",
-          });
-          button.click(function () {
-            currentLocation = button.text();
-            init()
-          });
-        
-        $(".history").prepend(button)
+        {
+          text: recentSearches[i],
+          class: "button",
+        });
+      button.click(function () {
+        currentLocation = button.text();
+        init()
+      });
+
+      $(".history").prepend(button)
     })(i);
 
   }
@@ -217,10 +218,13 @@ $("#input").on('keyup', function (e) {
 });
 
 $("#clear").click(function () {
-  for(var i = 0; i < recentSearches.length; i++){
+  for (var i = 0; i < recentSearches.length; i++) {
     $(".history .button")[0].remove();
   }
   recentSearches = [];
   localStorage.removeItem("recent");
 });
 
+$("#input").focus(function(){
+  error.hide()
+});
