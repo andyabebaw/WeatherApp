@@ -22,7 +22,7 @@ This website was built to serve as a way to keep track of the weather across the
 
 ## Usage
 
-This website can be used to quiz yourself on CS topics.
+This website can be used to check the weather in different cities.
 
 ![alt Screenshot](./Assets/images/weather%20app.png)
 
