@@ -12,10 +12,12 @@ var cards = $(".card").map(function () {
 });
 
 $(function () {
+  //loads search history
   addSearchButtons()
   init();
 });
 
+//loads page data
 function init() {
   if (recentSearches === null) {
     recentSearches = [];
@@ -24,6 +26,7 @@ function init() {
   getCoordFromCityName(currentLocation, true);
 }
 
+//gets date based on how many days in the future it is
 function getDate(daysinFuture) {
 
   var today = new Date();
@@ -40,6 +43,7 @@ function getDate(daysinFuture) {
   return date;
 }
 
+//gets the day of the week for a specefic day
 function getDayOfWeek(daysinFuture){
   const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var today = new Date();
@@ -50,6 +54,7 @@ function getDayOfWeek(daysinFuture){
   return weekday[newDay.getDay()];
 }
 
+//gets long form of todays date
 function getTodaysDateLongForm() {
   var today = new Date();
   var day = today.toLocaleDateString('en-US', {
@@ -64,6 +69,7 @@ function getTodaysDateLongForm() {
   return today;
 }
 
+//sets Todays date and temp
 function setTodaysDateTemp() {
   var locationEl = $("#location");
   var dateEl = $("#date");
@@ -71,6 +77,7 @@ function setTodaysDateTemp() {
   dateEl.text(getTodaysDateLongForm());
 }
 
+//gets 5 day forecast 
 function setWeatherForecast() {
   var weatherURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + long + "&appid=ee5bac9a1e0c0e170057e26226f0931a&units=imperial";
   fetch(weatherURL)
@@ -78,11 +85,13 @@ function setWeatherForecast() {
       return response.json();
     })
     .then(function (data) {
+      console.log(data)
       forecastData = data;
       setForecastData();
     })
 }
 
+//sets 5 day forecast 
 function setForecastData() {
 
   $(".card").children(".weatherDate")
@@ -112,27 +121,32 @@ function setForecastData() {
 
 }
 
+//sets todays temp
 function setTodaysTemp() {
   var temp = $("#todaysTemp");
   temp.text(currentWeather.main.temp);
 }
 
+//sets todays icon
 function setTodaysIcon() {
   var icon = $("#todaysEmoji");
   var iconURL = "http://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png";
   icon.attr("src", iconURL);
 }
 
+//sets todays wind speed
 function setTodaysWindSpeed() {
   var wind = $("#todaysWind");
   wind.text((currentWeather.wind.speed));
 }
 
+//sets todays humidity
 function setTodaysHumidity() {
   var humidity = $("#todaysHumidity");
   humidity.text((currentWeather.main.humidity));
 }
 
+//gets and sets todays weathers
 function getWeather() {
   var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=ee5bac9a1e0c0e170057e26226f0931a&units=imperial";
   fetch(weatherURL)
@@ -148,6 +162,7 @@ function getWeather() {
     })
 }
 
+//gets and sets coordinates from city name
 function getCoordFromCityName(cityName, isInit) {
   var weatherURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=ee5bac9a1e0c0e170057e26226f0931a"
   fetch(weatherURL)
@@ -170,6 +185,7 @@ function getCoordFromCityName(cityName, isInit) {
     })
 }
 
+//adds new city to search history
 function submitCity() {
   if (!recentSearches.includes(currentLocation.toUpperCase())) {
     recentSearches = recentSearches || [];
@@ -184,8 +200,8 @@ function submitCity() {
   }
 }
 
+//adds new search history button after search activated
 function updateSearchButtons() {
-  console.log("here1")
   var button = $('<button/>',
     {
       text: recentSearches[recentSearches.length - 1],
@@ -199,6 +215,7 @@ function updateSearchButtons() {
 
 }
 
+//adds search history buttons on page load
 function addSearchButtons() {
   if (recentSearches != null && recentSearches.length > 0) {
     console.log("here2")
@@ -219,11 +236,13 @@ function addSearchButtons() {
   }
 }
 
+// searches using input value
 $("#search").click(function () {
   currentLocation = document.getElementById('input').value;
   getCoordFromCityName(currentLocation, false);
 });
 
+//allows enter key to be able to submit input
 $("#input").on('keyup', function (e) {
   if (e.key === 'Enter' || e.keyCode === 13) {
     currentLocation = document.getElementById('input').value;
@@ -231,6 +250,7 @@ $("#input").on('keyup', function (e) {
   }
 });
 
+//removes search history
 $("#clear").click(function () {
   for (var i = 0; i < recentSearches.length; i++) {
     $(".history .button")[0].remove();
@@ -239,6 +259,7 @@ $("#clear").click(function () {
   localStorage.removeItem("recent");
 });
 
+//hides error button after user starts to input new city
 $("#input").focus(function(){
   error.hide()
 });
