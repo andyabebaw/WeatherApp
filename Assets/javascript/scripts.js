@@ -3,7 +3,7 @@ var forecastData;
 var lat;
 var long;
 
-var currentLocation = "Atlanta";
+var currentLocation = "Seattle";
 var recentSearches = JSON.parse(localStorage.getItem("recent"))
 var error = $("#error")
 
@@ -89,7 +89,7 @@ function setForecastData() {
   for (var i = 0; i < cards.length; i++) {
 
     var weekday = cards.children(".weekday");
-    weekday[i].innerHTML = (getDayOfWeek(i+1));
+    weekday[i].innerHTML = (getDayOfWeek(i+1).toUpperCase());
 
     var weatherDate = cards.children(".weatherDate");
     weatherDate[i].innerHTML = (getDate(i + 1));
