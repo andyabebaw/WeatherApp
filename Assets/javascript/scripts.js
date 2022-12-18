@@ -50,7 +50,6 @@ function getDayOfWeek(daysinFuture){
   var newDay = tomorrow = new Date(today)
 
   newDay.setDate(tomorrow.getDate() + daysinFuture)
-  console.log(newDay.getDay())
   return weekday[newDay.getDay()];
 }
 
@@ -85,7 +84,6 @@ function setWeatherForecast() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data)
       forecastData = data;
       setForecastData();
     })
@@ -218,7 +216,6 @@ function updateSearchButtons() {
 //adds search history buttons on page load
 function addSearchButtons() {
   if (recentSearches != null && recentSearches.length > 0) {
-    console.log("here2")
     for (var i = 0; i < recentSearches.length; i++) (function (i) {
       var button = $('<button/>',
         {
