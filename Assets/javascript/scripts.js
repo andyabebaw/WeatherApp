@@ -104,7 +104,7 @@ function setForecastData() {
     var day = forecastData.daily[i];
 
     var icon = cards.children(".emoji");
-    var iconURL = "http://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
+    var iconURL = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
     icon[i].src = iconURL;
 
     var temp = cards.children(".temp");
@@ -128,7 +128,7 @@ function setTodaysTemp() {
 //sets todays icon
 function setTodaysIcon() {
   var icon = $("#todaysEmoji");
-  var iconURL = "http://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png";
+  var iconURL = "https://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png";
   icon.attr("src", iconURL);
 }
 
@@ -162,7 +162,7 @@ function getWeather() {
 
 //gets and sets coordinates from city name
 function getCoordFromCityName(cityName, isInit) {
-  var weatherURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=ee5bac9a1e0c0e170057e26226f0931a"
+  var weatherURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=ee5bac9a1e0c0e170057e26226f0931a"
   fetch(weatherURL)
     .then(function (response) {
       return response.json();
